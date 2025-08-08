@@ -1,1 +1,23 @@
-<p>home works!</p>
+<h2 class="text-3xl font-bold mb-6 text-gray-700">Nos Produits</h2>
+
+<!-- Product list using a Tailwind CSS grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div *ngFor="let product of products$ | async">
+    <p-card [header]="product.name">
+      <ng-template pTemplate="header">
+        <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-48 object-cover">
+      </ng-template>
+      <p>{{product.price | currency }}</p>
+      <p class="text-gray-600">
+        {{ product.description }}
+      </p>
+      <ng-template pTemplate="footer">
+        <p-button label="View Details"
+                  icon="pi pi-search"
+                  styleClass="w-full"
+                  [routerLink]="['/details', product.id]">
+        </p-button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

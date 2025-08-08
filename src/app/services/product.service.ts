@@ -9,7 +9,7 @@ import { Product } from '../models/product';
 })
 export class ProductService {
     private apiUrl = 'http://localhost:3000/products';
-
+    public errorMessage: string | null = null;
     constructor(private http: HttpClient) { }
 
     getProducts(): Observable<Product[]> {
@@ -31,6 +31,7 @@ export class ProductService {
 
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
+            this.errorMessage = "Unexpected error"
             // Une erreur côté client ou réseau s'est produite.
             console.error('An error occurred:', error.error);
         } else {

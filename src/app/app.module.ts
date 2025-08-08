@@ -13,7 +13,7 @@ import { CounterAComponent } from './components/counter-a/counter-a.component';
 import { CounterBComponent } from './components/counter-b/counter-b.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CardModule } from 'primeng/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     ButtonModule,
     ToolbarModule,
     InputTextModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
