@@ -11,13 +11,17 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CounterAComponent } from './components/counter-a/counter-a.component';
 import { CounterBComponent } from './components/counter-b/counter-b.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DetailsComponent,
     CounterAComponent,
-    CounterBComponent
+    CounterBComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,8 @@ import { CounterBComponent } from './components/counter-b/counter-b.component';
     BrowserAnimationsModule,
     ButtonModule,
     ToolbarModule,
-    InputTextModule
+    InputTextModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
