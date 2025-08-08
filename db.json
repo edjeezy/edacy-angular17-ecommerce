@@ -1,0 +1,109 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "T-Shirt Classique",
+      "price": 20,
+      "description": "Un t-shirt classique confortable et élégant en 100% coton.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=T-Shirt"
+    },
+    {
+      "id": 2,
+      "name": "Jeans Modernes",
+      "price": 55,
+      "description": "Jean en denim de haute qualité avec une coupe slim moderne.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Jeans"
+    },
+    {
+      "id": 3,
+      "name": "Baskets de Course",
+      "price": 80,
+      "description": "Baskets légères et durables, parfaites pour votre course quotidienne.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Baskets"
+    },
+    {
+      "id": 4,
+      "name": "Portefeuille en Cuir",
+      "price": 45,
+      "description": "Un portefeuille en cuir élégant et durable avec plusieurs fentes pour cartes.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Portefeuille"
+    },
+    {
+      "id": 5,
+      "name": "Lunettes de Soleil",
+      "price": 120,
+      "description": "Lunettes de soleil élégantes avec protection UV.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Lunettes"
+    },
+    {
+      "id": 6,
+      "name": "Montre-Bracelet",
+      "price": 250,
+      "description": "Une montre-bracelet élégante avec un bracelet en acier inoxydable.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Montre"
+    },
+    {
+      "id": 7,
+      "name": "Sac à Dos",
+      "price": 70,
+      "description": "Un sac à dos spacieux et confortable pour un usage quotidien.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Sac+a+Dos"
+    },
+    {
+      "id": 8,
+      "name": "Bonnet",
+      "price": 15,
+      "description": "Un bonnet chaud et douillet pour temps froid.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Bonnet"
+    },
+    {
+      "id": 9,
+      "name": "Ceinture en Cuir",
+      "price": 35,
+      "description": "Une ceinture en cuir classique qui complète n'importe quelle tenue.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Ceinture"
+    },
+    {
+      "id": 10,
+      "name": "Sweat à Capuche",
+      "price": 60,
+      "description": "Un sweat à capuche doux et confortable, parfait pour un look décontracté.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Sweat"
+    },
+    {
+      "id": 11,
+      "name": "Écharpe en Laine",
+      "price": 25,
+      "description": "Une écharpe en laine douce pour vous garder au chaud en hiver.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Echarpe"
+    },
+    {
+      "id": 12,
+      "name": "Gants en Cuir",
+      "price": 50,
+      "description": "Gants en cuir élégants pour une protection contre le froid.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Gants"
+    },
+    {
+      "id": 13,
+      "name": "Chaussettes de Sport",
+      "price": 10,
+      "description": "Chaussettes de sport confortables et respirantes.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Chaussettes"
+    },
+    {
+      "id": 14,
+      "name": "Casquette de Baseball",
+      "price": 22,
+      "description": "Une casquette de baseball classique pour un look sportif.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Casquette"
+    },
+    {
+      "id": 15,
+      "name": "Veste en Jean",
+      "price": 90,
+      "description": "Une veste en jean intemporelle pour toutes les saisons.",
+      "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Veste+en+Jean"
+    }
+  ]
+}

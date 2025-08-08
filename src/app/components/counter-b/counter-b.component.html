@@ -1,0 +1,9 @@
+<div class="card border p-4 rounded-2xl text-center bg-gray-100">
+  <h3> Component B</h3>
+  <p>Injects the root <code>CounterService</code>.</p>
+  <div class="display">
+    <p>Counter Value:</p>
+    <p class="value">{{ counterService.value }}</p>
+  </div>
+  <p-button (click)="counterService.increment()" label="Increment"/>
+</div>

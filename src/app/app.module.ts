@@ -9,11 +9,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { DetailsComponent } from './pages/details/details.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
+import { CounterAComponent } from './components/counter-a/counter-a.component';
+import { CounterBComponent } from './components/counter-b/counter-b.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
+    CounterAComponent,
+    CounterBComponent
   ],
   imports: [
     BrowserModule,
