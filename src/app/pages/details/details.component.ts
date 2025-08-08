@@ -14,7 +14,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   public product$!: Observable<Product>;
   public selectedSize: string | null = null;
   public selectedColor: string | null = null;
-  private paramsSub!: Subscription
+  private paramsSub!: Subscription;
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService
