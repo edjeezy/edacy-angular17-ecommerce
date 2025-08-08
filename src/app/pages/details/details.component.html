@@ -1,2 +1,42 @@
-DEtailsComponent
-<router-outlet></router-outlet>
+<ng-container *ngIf="product$ | async as product">
+  <!-- Using Tailwind's flexbox for layout -->
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- Image container -->
+    <div class="md:w-1/2">
+      <img [src]="product.imageUrl" [alt]="product.name" class="rounded-lg shadow-lg w-full">
+    </div>
+
+    <!-- Info container -->
+    <div class="md:w-1/2">
+      <h2 class="text-4xl font-extrabold text-gray-800">{{ product.name }}</h2>
+      <p class="text-3xl font-semibold text-blue-600 my-4">{{ product.price | currency }}</p>
+      <p class="text-lg text-gray-700 leading-relaxed">{{ product.description }}</p>
+
+      <!-- Options styled with Tailwind -->
+      <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+        <h4 class="font-bold text-lg">Your Selections:</h4>
+        <p *ngIf="selectedSize" class="mt-2">Size: <span class="font-semibold">{{ selectedSize }}</span></p>
+        <p *ngIf="selectedColor" class="mt-1">Color: <span class="font-semibold">{{ selectedColor }}</span></p>
+        <p *ngIf="!selectedColor && !selectedSize" class="mt-2 text-gray-500">No options selected.</p>
+      </div>
+
+      <!-- Links styled with p-button -->
+      <div class="mt-6">
+        <h4 class="font-bold text-lg mb-2">Try other options:</h4>
+        <div class="flex gap-4">
+          <p-button label="Medium, Blue"
+                    [routerLink]="[]"
+                    [queryParams]="{ size: 'M', color: 'Blue', strass: 'Paillettes' }"
+                    queryParamsHandling="merge">
+          </p-button>
+          <p-button label="Large, Red"
+                    styleClass="p-button-secondary"
+                    [routerLink]="[]"
+                    [queryParams]="{ size: 'L', color: 'Red' }"
+                    queryParamsHandling="merge">
+          </p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

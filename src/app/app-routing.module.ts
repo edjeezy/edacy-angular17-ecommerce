@@ -16,19 +16,8 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'users',
-    component: DetailsComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full'
-      },
-      {
-        path: 'list',
-        component: CounterAComponent
-      },
-    ]
+    path: 'details/:id',
+    component: DetailsComponent
   },
   {
     path: '**',
