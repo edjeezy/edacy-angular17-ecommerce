@@ -5,6 +5,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminNotFoundComponent } from './pages/admin-not-found/admin-not-found.component';
 import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { AdminSignupComponent } from './pages/admin-signup/admin-signup.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'profile' },
-      { path: 'profile', component: ProfileComponent },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
       { path: 'login', component: AdminLoginComponent },
       { path: 'signup', component: AdminSignupComponent },
       { path: '**', component: AdminNotFoundComponent },

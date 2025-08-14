@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
-// Interface for the token response from the server
+// Interface pour la réponse du jeton du serveur
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
 }
 
-// Interface for the decoded user payload from the JWT
+// Interface pour la charge utile de l'utilisateur décodée à partir du JWT
 export interface UserPayload {
   id: number | string;
   name: string;
@@ -24,15 +24,15 @@ export interface UserPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  // The base URL of your Express server
-  private readonly API_URL = 'http://localhost:3000'; 
+  // L'URL de base de votre serveur Express
+  private readonly API_URL = 'http://localhost:3000';
 
-  // BehaviorSubject to hold the current authentication state
+  // BehaviorSubject pour contenir l'état d'authentification actuel
   private authState = new BehaviorSubject<boolean>(this.isAuthenticated());
-  // BehaviorSubject to hold the decoded user information
+  // BehaviorSubject pour contenir les informations utilisateur décodées
   private user = new BehaviorSubject<UserPayload | null>(null);
   
-  // Expose the auth state and user data as Observables
+  // Exposer l'état d'authentification et les données utilisateur en tant qu'Observables
   public authState$ = this.authState.asObservable();
   public user$ = this.user.asObservable();
 
@@ -41,14 +41,16 @@ export class AuthService {
     private jwtHelper: JwtHelperService,
     private router: Router
   ) {
-    // On service initialization, check for an existing token and decode it.
-    // This handles the case where the user reloads the page.
+
+
+    // Lors de l'initialisation du service, vérifiez un jeton existant et décodez-le.
+    // Cela gère le cas où l'utilisateur recharge la page.
     this.decodeAndStoreUser(this.getAccessToken());
   }
 
   /**
-   * Decodes a JWT, stores the user payload, and updates the user subject.
-   * @param {string | null} token - The JWT access token.
+   * Décode un JWT, stocke la charge utile de l'utilisateur et met à jour le sujet utilisateur.
+   * @param {string | null} token - Le jeton d'accès JWT.
    */
   private decodeAndStoreUser(token: string | null): void {
     if (token) {
@@ -60,8 +62,8 @@ export class AuthService {
   }
 
   /**
-   * Checks if the user is authenticated by verifying the access token.
-   * @returns {boolean} True if the token exists and is not expired.
+   * Vérifie si l'utilisateur est authentifié en vérifiant le jeton d'accès.
+   * @returns {boolean} Vrai si le jeton existe et n'est pas expiré.
    */
   public isAuthenticated(): boolean {
     const token = this.getAccessToken();
@@ -69,77 +71,77 @@ export class AuthService {
   }
 
   /**
-   * Retrieves the access token from localStorage.
-   * @returns {string | null} The access token or null if not found.
+   * Récupère le jeton d'accès depuis le localStorage.
+   * @returns {string | null} Le jeton d'accès ou null s'il n'est pas trouvé.
    */
   public getAccessToken(): string | null {
     return localStorage.getItem('access_token');
   }
 
   /**
-   * Retrieves the refresh token from localStorage.
-   * @returns {string | null} The refresh token or null if not found.
+   * Récupère le jeton de rafraîchissement depuis le localStorage.
+   * @returns {string | null} Le jeton de rafraîchissement ou null s'il n'est pas trouvé.
    */
   private getRefreshToken(): string | null {
     return localStorage.getItem('refresh_token');
   }
 
   /**
-   * Stores the access and refresh tokens in localStorage and updates auth state.
-   * @param {AuthResponse} tokens - The tokens to store.
+   * Stocke les jetons d'accès et de rafraîchissement dans le localStorage et met à jour l'état d'authentification.
+   * @param {AuthResponse} tokens - Les jetons à stocker.
    */
   private setTokens(tokens: AuthResponse): void {
     localStorage.setItem('access_token', tokens.accessToken);
     localStorage.setItem('refresh_token', tokens.refreshToken);
-    this.decodeAndStoreUser(tokens.accessToken); // Decode and store user info
-    this.authState.next(true); // Notify subscribers that the user is authenticated
+    this.decodeAndStoreUser(tokens.accessToken); // Décoder et stocker les informations utilisateur
+    this.authState.next(true); // Notifier les abonnés que l'utilisateur est authentifié
   }
 
   /**
-   * Clears tokens from localStorage and updates auth state.
+   * Efface les jetons du localStorage et met à jour l'état d'authentification.
    */
   private clearTokens(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    this.user.next(null); // Clear user data
-    this.authState.next(false); // Notify subscribers that the user is logged out
+    this.user.next(null); // Effacer les données utilisateur
+    this.authState.next(false); // Notifier les abonnés que l'utilisateur est déconnecté
   }
 
   /**
-   * Handles user login with email and password.
-   * @param {any} credentials - The user's login credentials.
+   * Gère la connexion de l'utilisateur avec l'email et le mot de passe.
+   * @param {any} credentials - Les informations de connexion de l'utilisateur.
    * @returns {Observable<AuthResponse>}
    */
   public login(credentials: any): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/auth/login`, credentials).pipe(
       tap((response) => {
         this.setTokens(response);
-        this.router.navigate(['/profile']); // Redirect to a protected route on success
+        this.router.navigate(['/profile']); // Rediriger vers une route protégée en cas de succès
       })
     );
   }
 
   /**
-   * Handles new user registration.
-   * @param {any} userInfo - The new user's information.
+   * Gère l'enregistrement d'un nouvel utilisateur.
+   * @param {any} userInfo - Les informations du nouvel utilisateur.
    * @returns {Observable<AuthResponse>}
    */
   public signup(userInfo: any): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/auth/signup`, userInfo).pipe(
       tap((response) => {
         this.setTokens(response);
-        this.router.navigate(['/profile']); // Automatically log in and redirect
+        this.router.navigate(['/profile']); // Se connecter et rediriger automatiquement
       })
     );
   }
 
   /**
-   * Logs the user out by clearing local tokens and notifying the server.
+   * Déconnecte l'utilisateur en effaçant les jetons locaux et en notifiant le serveur.
    */
   public logout(): void {
     const refreshToken = this.getRefreshToken();
     if (refreshToken) {
-      // Notify the backend to invalidate the refresh token
+      // Notifier le backend pour invalider le jeton de rafraîchissement
       this.http.post(`${this.API_URL}/auth/logout`, { refreshToken }).subscribe();
     }
     this.clearTokens();
@@ -147,17 +149,17 @@ export class AuthService {
   }
 
   /**
-   * Initiates the Google OAuth flow by redirecting to the backend endpoint.
+   * Lance le flux OAuth de Google en redirigeant vers le point de terminaison du backend.
    */
   public loginWithGoogle(): void {
-    // The backend will handle the redirect to Google's consent screen.
+    // Le backend gérera la redirection vers l'écran de consentement de Google.
     window.location.href = `${this.API_URL}/auth/google`;
   }
 
   /**
-   * Handles the callback from Google OAuth, storing the tokens from the URL.
-   * @param {string} accessToken - The access token from the URL query params.
-   * @param {string} refreshToken - The refresh token from the URL query params.
+   * Gère le rappel de Google OAuth, en stockant les jetons de l'URL.
+   * @param {string} accessToken - Le jeton d'accès des paramètres de requête de l'URL.
+   * @param {string} refreshToken - Le jeton de rafraîchissement des paramètres de requête de l'URL.
    */
   public handleGoogleCallback(accessToken: string, refreshToken: string): void {
     this.setTokens({ accessToken, refreshToken });
@@ -165,7 +167,7 @@ export class AuthService {
   }
 
   /**
-   * Attempts to get a new access token using the refresh token.
+   * Tente d'obtenir un nouveau jeton d'accès en utilisant le jeton de rafraîchissement.
    * @returns {Observable<any>}
    */
   public refreshToken(): Observable<any> {
@@ -178,12 +180,12 @@ export class AuthService {
     return this.http.post<any>(`${this.API_URL}/auth/refresh-token`, { refreshToken }).pipe(
       tap((response: { accessToken: string }) => {
         localStorage.setItem('access_token', response.accessToken);
-        // After refreshing, decode the new access token to update user info
+        // Après le rafraîchissement, décodez le nouveau jeton d'accès pour mettre à jour les informations utilisateur
         this.decodeAndStoreUser(response.accessToken);
         this.authState.next(true);
       }),
       catchError((error) => {
-        // If the refresh token is also invalid, log the user out.
+        // Si le jeton de rafraîchissement est également invalide, déconnectez l'utilisateur.
         this.logout();
         return of(null);
       })
