@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, of, retry, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, Observable, of, retry, throwError } from 'rxjs';
 import { Product } from '../models/product';
 
 
@@ -16,6 +16,7 @@ export class ProductService {
     getProducts(): Observable<Product[]> {
         return this.http.get<Product[]>(this.apiUrl)
             .pipe(
+                distinctUntilChanged(),
                 retry(3),
                 catchError(this.handleError)
             )

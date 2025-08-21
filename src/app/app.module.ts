@@ -11,6 +11,7 @@ import { CounterBComponent } from './components/counter-b/counter-b.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { PollingComponent } from './pages/polling/polling.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -24,6 +25,7 @@ export function tokenGetter() {
     CounterAComponent,
     CounterBComponent,
     NotFoundComponent,
+    PollingComponent,
   ],
   imports: [
     BrowserModule,

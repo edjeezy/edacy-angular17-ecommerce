@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { debounceTime, distinctUntilChanged, Observable, startWith, Subject, Subscription, switchMap, take, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, Subscription, switchMap, take, tap } from 'rxjs';
 import { Product } from '../../models/product';
 
 @Component({
