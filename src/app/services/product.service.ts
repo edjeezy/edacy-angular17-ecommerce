@@ -30,6 +30,26 @@ export class ProductService {
         )
     }
 
+    getProduitsDerives(id: number): Observable<Product[]> {
+        const url = `${this.apiUrl}/${id}`;
+        return of([
+            {
+                "id": 1,
+                "name": "T-Shirt Classique",
+                "price": 20,
+                "description": "Un t-shirt classique confortable et élégant en 100% coton.",
+                "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=T-Shirt"
+            },
+            {
+                "id": 2,
+                "name": "Jeans Modernes",
+                "price": 55,
+                "description": "Jean en denim de haute qualité avec une coupe slim moderne.",
+                "imageUrl": "https://placehold.co/600x400/cccccc/000000?text=Jeans"
+            },
+        ])
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
             this.errorMessage = "Unexpected error"
@@ -45,7 +65,7 @@ export class ProductService {
     }
 
     search(produits: Product[], term: string): Product[] {
-        if(!term || !term.length) {
+        if (!term || !term.length) {
             return produits;
         }
         const resultat = produits.filter((produit) => produit.name.includes(term) || produit.description.includes(term));

@@ -3,14 +3,14 @@
   <div class="flex flex-col md:flex-row gap-8">
     <!-- Image container -->
     <div class="md:w-1/2">
-      <img [src]="product.imageUrl" [alt]="product.name" class="rounded-lg shadow-lg w-full">
+      <img [src]="product.product.imageUrl" [alt]="product.product.name" class="rounded-lg shadow-lg w-full">
     </div>
 
     <!-- Info container -->
     <div class="md:w-1/2">
-      <h2 class="text-4xl font-extrabold text-gray-800">{{ product.name }}</h2>
-      <p class="text-3xl font-semibold text-blue-600 my-4">{{ product.price | currency }}</p>
-      <p class="text-lg text-gray-700 leading-relaxed">{{ product.description }}</p>
+      <h2 class="text-4xl font-extrabold text-gray-800">{{ product.product.name }}</h2>
+      <p class="text-3xl font-semibold text-blue-600 my-4">{{ product.product.price | currency }}</p>
+      <p class="text-lg text-gray-700 leading-relaxed">{{ product.product.description }}</p>
 
       <!-- Options styled with Tailwind -->
       <div class="mt-6 p-4 bg-gray-100 rounded-lg">
@@ -24,19 +24,33 @@
       <div class="mt-6">
         <h4 class="font-bold text-lg mb-2">Try other options:</h4>
         <div class="flex gap-4">
-          <p-button label="Medium, Blue"
-                    [routerLink]="[]"
-                    [queryParams]="{ size: 'M', color: 'Blue', strass: 'Paillettes' }"
-                    queryParamsHandling="merge">
+          <p-button label="Medium, Blue" [routerLink]="[]"
+            [queryParams]="{ size: 'M', color: 'Blue', strass: 'Paillettes' }" queryParamsHandling="merge">
           </p-button>
-          <p-button label="Large, Red"
-                    styleClass="p-button-secondary"
-                    [routerLink]="[]"
-                    [queryParams]="{ size: 'L', color: 'Red' }"
-                    queryParamsHandling="merge">
+          <p-button label="Large, Red" styleClass="p-button-secondary" [routerLink]="[]"
+            [queryParams]="{ size: 'L', color: 'Red' }" queryParamsHandling="merge">
           </p-button>
         </div>
       </div>
+    </div>
+  </div>
+  <!-- Product list using a Tailwind CSS grid -->
+  <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let product of product.derives">
+      <p-card [header]="product.name">
+        <ng-template pTemplate="header">
+          <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-48 object-cover">
+        </ng-template>
+        <p>{{product.price | currency }}</p>
+        <p class="text-gray-600">
+          {{ product.description }}
+        </p>
+        <ng-template pTemplate="footer">
+          <p-button label="View Details" icon="pi pi-search" styleClass="w-full"
+            [routerLink]="['/details', product.id]">
+          </p-button>
+        </ng-template>
+      </p-card>
     </div>
   </div>
 </ng-container>
