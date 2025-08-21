@@ -62,12 +62,44 @@ export class AuthService {
   }
 
   /**
+   * Décode manuellement le jeton pour vérifier son expiration.
+   * @param {string} token - Le jeton d'accès JWT.
+   * @returns {boolean} Vrai si le jeton est expiré, sinon faux.
+   */
+  private isTokenExpired(token: string): boolean {
+    if (!token) {
+      return true;
+    }
+
+    try {
+      // Décoder la charge utile du jeton en utilisant JwtHelperService
+      const decodedToken = this.jwtHelper.decodeToken<UserPayload>(token);
+
+      // Vérifier si le jeton a pu être décodé et s'il a une date d'expiration
+      if (!decodedToken || !decodedToken.exp) {
+        return true;
+      }
+
+      // Obtenir la date d'expiration en millisecondes
+      const expirationDate = decodedToken.exp * 1000;
+      // Obtenir la date actuelle en millisecondes
+      const now = new Date().getTime();
+
+      // Vérifier si le jeton a expiré
+      return expirationDate < now;
+    } catch (error) {
+      // Si une erreur se produit lors du décodage, considérer le jeton comme expiré
+      return true;
+    }
+  }
+
+  /**
    * Vérifie si l'utilisateur est authentifié en vérifiant le jeton d'accès.
    * @returns {boolean} Vrai si le jeton existe et n'est pas expiré.
    */
   public isAuthenticated(): boolean {
     const token = this.getAccessToken();
-    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+    return token ? !this.isTokenExpired(token) : false;
   }
 
   /**
