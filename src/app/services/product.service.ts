@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, Observable, of, retry, throwError } from 'rxjs';
 import { Product } from '../models/product';
 
 
@@ -8,6 +8,7 @@ import { Product } from '../models/product';
     providedIn: 'root'
 })
 export class ProductService {
+
     private apiUrl = 'http://localhost:3000/products';
     public errorMessage: string | null = null;
     constructor(private http: HttpClient) { }
@@ -41,5 +42,13 @@ export class ProductService {
         }
         // Retourne un observable avec un message d'erreur pour l'utilisateur.
         return throwError(() => new Error('Something bad happened; please try again later.'));
+    }
+
+    search(produits: Product[], term: string): Product[] {
+        if(!term || !term.length) {
+            return produits;
+        }
+        const resultat = produits.filter((produit) => produit.name.includes(term) || produit.description.includes(term));
+        return resultat;
     }
 }
